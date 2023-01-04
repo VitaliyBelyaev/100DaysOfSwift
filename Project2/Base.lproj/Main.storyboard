@@ -22,46 +22,61 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eoq-MF-Iai" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="495"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="us" translatesAutoresizingMaskIntoConstraints="NO" id="53a-ST-P4z" userLabel="Button1">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gel-v2-5l3" userLabel="Button1">
                                                 <rect key="frame" x="71.666666666666686" y="30" width="250" height="125"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
                                                 </accessibility>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="250" identifier="button1WidthConstraint" id="Fj3-aR-SPx"/>
-                                                    <constraint firstAttribute="width" secondItem="53a-ST-P4z" secondAttribute="height" multiplier="2:1" id="dHR-vM-yRL"/>
+                                                    <constraint firstAttribute="width" secondItem="Gel-v2-5l3" secondAttribute="height" multiplier="2:1" id="3Bn-uN-0it"/>
+                                                    <constraint firstAttribute="width" constant="250" id="tBJ-HH-kGA"/>
                                                 </constraints>
-                                            </imageView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="us" translatesAutoresizingMaskIntoConstraints="NO" id="ir7-Pc-PVC" userLabel="Button2">
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" backgroundImage="uk"/>
+                                                <connections>
+                                                    <action selector="buttonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nNH-mD-e4g"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="30m-8k-ax9" userLabel="Button2">
                                                 <rect key="frame" x="71.666666666666686" y="185" width="250" height="125"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
                                                 </accessibility>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="ir7-Pc-PVC" secondAttribute="height" multiplier="2:1" id="WqY-6b-q2v"/>
+                                                    <constraint firstAttribute="width" secondItem="30m-8k-ax9" secondAttribute="height" multiplier="2:1" id="2mR-S5-aai"/>
                                                 </constraints>
-                                            </imageView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="us" translatesAutoresizingMaskIntoConstraints="NO" id="U7b-wE-IxO" userLabel="Button3">
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" backgroundImage="uk"/>
+                                                <connections>
+                                                    <action selector="buttonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XzL-gw-WOZ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17A-by-UUk" userLabel="Button3">
                                                 <rect key="frame" x="71.666666666666686" y="340" width="250" height="125"/>
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
                                                 </accessibility>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="U7b-wE-IxO" secondAttribute="height" multiplier="2:1" id="GO3-kr-edl"/>
+                                                    <constraint firstAttribute="width" secondItem="17A-by-UUk" secondAttribute="height" multiplier="2:1" id="nVn-Lb-ysU"/>
                                                 </constraints>
-                                            </imageView>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" backgroundImage="uk"/>
+                                                <connections>
+                                                    <action selector="buttonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="19T-m9-5gq"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="ir7-Pc-PVC" firstAttribute="leading" secondItem="53a-ST-P4z" secondAttribute="leading" id="DQC-Ob-EXa"/>
-                                            <constraint firstItem="ir7-Pc-PVC" firstAttribute="top" secondItem="53a-ST-P4z" secondAttribute="bottom" constant="30" id="NS6-z1-uLK"/>
-                                            <constraint firstItem="ir7-Pc-PVC" firstAttribute="trailing" secondItem="53a-ST-P4z" secondAttribute="trailing" id="QdW-Tu-QpT"/>
-                                            <constraint firstItem="U7b-wE-IxO" firstAttribute="trailing" secondItem="ir7-Pc-PVC" secondAttribute="trailing" id="RkZ-ei-Y2n"/>
-                                            <constraint firstItem="U7b-wE-IxO" firstAttribute="leading" secondItem="ir7-Pc-PVC" secondAttribute="leading" id="U1P-EF-46P"/>
-                                            <constraint firstItem="U7b-wE-IxO" firstAttribute="top" secondItem="ir7-Pc-PVC" secondAttribute="bottom" constant="30" id="ZGG-Ln-avb"/>
-                                            <constraint firstItem="53a-ST-P4z" firstAttribute="centerX" secondItem="Eoq-MF-Iai" secondAttribute="centerX" id="b7z-JK-5K1"/>
-                                            <constraint firstItem="53a-ST-P4z" firstAttribute="top" secondItem="Eoq-MF-Iai" secondAttribute="top" constant="30" id="eJD-sg-K9p"/>
-                                            <constraint firstAttribute="bottom" secondItem="U7b-wE-IxO" secondAttribute="bottom" constant="30" id="qxx-BV-Fmq"/>
+                                            <constraint firstItem="30m-8k-ax9" firstAttribute="trailing" secondItem="Gel-v2-5l3" secondAttribute="trailing" id="944-Jh-Pl0"/>
+                                            <constraint firstItem="17A-by-UUk" firstAttribute="leading" secondItem="30m-8k-ax9" secondAttribute="leading" id="Ggk-1K-7PC"/>
+                                            <constraint firstItem="30m-8k-ax9" firstAttribute="top" secondItem="Gel-v2-5l3" secondAttribute="bottom" constant="30" id="MV0-u7-VI5"/>
+                                            <constraint firstItem="Gel-v2-5l3" firstAttribute="top" secondItem="Eoq-MF-Iai" secondAttribute="top" constant="30" id="PlV-aV-dCu"/>
+                                            <constraint firstAttribute="bottom" secondItem="17A-by-UUk" secondAttribute="bottom" constant="30" id="hpa-7z-WQA"/>
+                                            <constraint firstItem="17A-by-UUk" firstAttribute="top" secondItem="30m-8k-ax9" secondAttribute="bottom" constant="30" id="iRF-LL-7S9"/>
+                                            <constraint firstItem="17A-by-UUk" firstAttribute="trailing" secondItem="30m-8k-ax9" secondAttribute="trailing" id="p9M-8y-85i"/>
+                                            <constraint firstItem="Gel-v2-5l3" firstAttribute="centerX" secondItem="Eoq-MF-Iai" secondAttribute="centerX" id="rA6-rs-lvd"/>
+                                            <constraint firstItem="30m-8k-ax9" firstAttribute="leading" secondItem="Gel-v2-5l3" secondAttribute="leading" id="ttq-Op-XBG"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -87,10 +102,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="oQx-oH-HVr"/>
                     <connections>
-                        <outlet property="button1" destination="53a-ST-P4z" id="Oso-oc-1UX"/>
-                        <outlet property="button1WidthConstraint" destination="Fj3-aR-SPx" id="RIZ-3I-AM7"/>
-                        <outlet property="button2" destination="ir7-Pc-PVC" id="5OK-9v-gNe"/>
-                        <outlet property="button3" destination="U7b-wE-IxO" id="WCt-yJ-Y5u"/>
+                        <outlet property="button1" destination="Gel-v2-5l3" id="Wa6-5t-gjg"/>
+                        <outlet property="button2" destination="30m-8k-ax9" id="7F1-TA-HXG"/>
+                        <outlet property="button3" destination="17A-by-UUk" id="bxk-kR-Bgo"/>
+                        <outlet property="buttonsWidthConstraint" destination="tBJ-HH-kGA" id="TXT-6L-EAm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -117,7 +132,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="us" width="200" height="100"/>
+        <image name="uk" width="200" height="100"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
