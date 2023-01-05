@@ -41,6 +41,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Score", style: .plain, target: self, action: #selector(showScore))
+        
         adjustButtonsWidthForIpadIfNeeded()
         setupButtonsBorders()
         askQuiestion()
@@ -69,7 +71,7 @@ class ViewController: UIViewController {
     private func showAlert(title: String,
                            message: String,
                            buttonText: String,
-                           action: @escaping (UIAlertAction?) -> Void) {
+                           action: ((UIAlertAction?) -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
         alertController.addAction(UIAlertAction(title: buttonText, style: .default, handler: action))
@@ -110,7 +112,10 @@ class ViewController: UIViewController {
         }
         questionsCount += 1
     }
-
+    
+    @objc private func showScore() {
+        showAlert(title: "", message: "Your score is \(score)", buttonText: "Continue")
+    }
     
     private func updateTitle() {
         title = "\(getPrettyCountryTitle(countries[correctAnswerIndex])) | Score: \(score)"
