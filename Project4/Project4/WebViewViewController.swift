@@ -8,19 +8,20 @@
 import UIKit
 import WebKit
 
-class ViewController: UIViewController, WKNavigationDelegate {
+class WebViewViewController: UIViewController, WKNavigationDelegate {
     
     @IBOutlet var webView: WKWebView!
     var progressView: UIProgressView!
-    var websites = ["apple.com", "hackingwithswift.com"]
+    var websiteToLoad: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationBars()
         setupWebView()
+        setupToolbar()
         
-        guard let url = URL(string: "https://\(websites[0])") else { return }
+        
+        guard let url = URL(string: "https://\(websiteToLoad)") else { return }
         webView.load(URLRequest(url: url))
     }
     
@@ -46,12 +47,11 @@ class ViewController: UIViewController, WKNavigationDelegate {
         let url = navigationAction.request.url
         
         if let host = url?.host {
-            for website in websites {
-                if host.contains(website) {
-                    decisionHandler(.allow)
-                    return
-                }
+            if host.contains(websiteToLoad) {
+                decisionHandler(.allow)
+                return
             }
+            showAlert(title: "Host \(host) is disallowed to go", buttonText: "Ок")
         }
         
         decisionHandler(.cancel)
@@ -61,28 +61,33 @@ class ViewController: UIViewController, WKNavigationDelegate {
     private func onOpenTapped() {
         let ac = UIAlertController(title: "Open page...", message: nil, preferredStyle: .actionSheet)
         
-        
-        for website in websites {
-            ac.addAction(UIAlertAction(title: website, style: .default, handler: openPage))
-        }
+//        for website in websites {
+//            ac.addAction(UIAlertAction(title: website, style: .default, handler: openPage))
+//        }
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(ac, animated: true)
     }
     
-    private func setupNavigationBars() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(onOpenTapped))
-        
+    private func setupToolbar() {
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
+        
+        let back = UIBarButtonItem(barButtonSystemItem: .rewind, target: webView, action: #selector(webView.goBack))
+        
+        let forward = UIBarButtonItem(barButtonSystemItem: .fastForward, target: webView, action: #selector(webView.goForward))
         
         progressView = UIProgressView(progressViewStyle: .default)
         progressView.sizeToFit()
         let progressButton = UIBarButtonItem(customView: progressView)
         
-        toolbarItems = [progressButton, spacer, refresh]
+        toolbarItems = [back, forward, progressButton, spacer, refresh]
         navigationController?.isToolbarHidden = false
+    }
+    
+    private func setupNavigationItem() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(onOpenTapped))
     }
     
     private func setupWebView() {
@@ -99,6 +104,18 @@ class ViewController: UIViewController, WKNavigationDelegate {
         guard let url = URL(string: "https://\(actionTitle)") else { return }
         
         webView.load(URLRequest(url: url))
+    }
+    
+    private func showAlert(title: String,
+                           message: String? = nil,
+                           buttonText: String,
+                           action: ((UIAlertAction?) -> Void)? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        
+        alertController.addAction(UIAlertAction(title: buttonText, style: .default, handler: action))
+        
+        present(alertController, animated: true)
     }
 }
     
