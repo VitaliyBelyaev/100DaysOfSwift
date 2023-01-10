@@ -17,6 +17,8 @@ class ViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(onAddTapped))
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Restart", style: .plain, target: self, action: #selector(startGame))
+        
         allWords = loadStartWords() ?? ["silkworm"]
         
         startGame()
@@ -43,7 +45,7 @@ class ViewController: UITableViewController {
         return startWords.components(separatedBy: "\n")
     }
     
-    private func startGame() {
+    @objc private func startGame() {
         title = allWords.randomElement()
         usedWords.removeAll(keepingCapacity: true)
         tableView.reloadData()
@@ -70,9 +72,6 @@ class ViewController: UITableViewController {
         
         let lowerAnswer = answer.lowercased()
         
-        let errorTitle: String
-        let errorMessage: String
-        
         let validationResult = validateWord(lowerAnswer)
         
         switch validationResult {
@@ -80,20 +79,20 @@ class ViewController: UITableViewController {
             usedWords.insert(lowerAnswer, at: 0)
             let indexPath = IndexPath(row: 0, section: 0)
             tableView.insertRows(at: [indexPath], with: .automatic)
-            return
         case .notReal:
-            errorTitle = "Word not recognized"
-            errorMessage = "You can't just make them up, you know!"
+            showErrorMessage(title: "Word not recognized",
+                             msg: "You can't just make them up, you know!")
         case .notOrigin:
-            errorTitle = "Word is already used"
-            errorMessage = "Be more original!"
+            showErrorMessage(title: "Word is already used",
+                             msg: "Be more original!")
         case .notPossible:
-            errorTitle = "Word not possible"
-            errorMessage = "You can't spell that word from \(title!.lowercased())"
-            
+            showErrorMessage(title: "Word not possible",
+                             msg: "You can't spell that word from \(title!.lowercased())")
         }
-        
-        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
+    }
+    
+    private func showErrorMessage(title: String, msg: String) {
+        let ac = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Ok", style: .default))
         present(ac, animated: true)
     }
@@ -114,6 +113,10 @@ class ViewController: UITableViewController {
     private func isPossible(_ word: String) -> Bool {
         guard var tempWord = title?.lowercased() else { return false }
         
+        if word == tempWord {
+            return false
+        }
+        
         for letter in word {
             if let position = tempWord.firstIndex(of: letter) {
                 tempWord.remove(at: position)
@@ -130,6 +133,9 @@ class ViewController: UITableViewController {
     }
     
     private func isReal(_ word: String) -> Bool {
+        if word.count < 3 {
+            return false
+        }
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
