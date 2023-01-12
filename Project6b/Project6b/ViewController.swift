@@ -70,7 +70,7 @@ class ViewController: UIViewController {
             label.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.2, constant: -8).isActive = true
             
             if let prev = prev {
-                label.topAnchor.constraint(equalTo: prev.bottomAnchor, constant: 10).isActive = true
+                label.topAnchor.constraint(equalTo: prev.bottomAnchor, constant: 10).isActive = true
             } else {
                 label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
             }
