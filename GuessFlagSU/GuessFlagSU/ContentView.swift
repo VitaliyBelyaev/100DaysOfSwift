@@ -1,0 +1,129 @@
+//
+//  ContentView.swift
+//  GuessFlagSU
+//
+//  Created by Vitaliy on 05.02.2023.
+//
+
+import SwiftUI
+
+struct ContentView: View {
+    
+    @Environment(\.colorScheme) var colorScheme
+    
+    @State private var showingScore = false
+    
+    @State private var scoreTitle = ""
+    
+    @State private var countries: [String] = [
+        "estonia",
+        "us",
+        "france",
+        "russia",
+        "germany",
+        "ireland",
+        "italy",
+        "monaco",
+        "nigeria",
+        "poland",
+        "spain",
+        "uk"
+    ].shuffled()
+    
+    private var score: Int = 0
+    @State private var correctAnswerIndex: Int = Int.random(in: 0...2)
+    private var questionsCount: Int = 0
+    
+    var body: some View {
+        ZStack {
+            
+            //            let colors = colorScheme == .dark ? [Color.blue, Color.black] : [Color.blue.opacity(0.7), Color.secondary.opacity(0.2)]
+            
+            let colors = [Color(red: 0.1, green: 0.2, blue: 0.45), Color(red: 0.76, green: 0.15, blue: 0.26)]
+            
+            LinearGradient(gradient: Gradient(colors: colors), startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                
+                Text("Guess the Flag")
+                        .font(.largeTitle.weight(.bold))
+                        .foregroundColor(.white)
+    
+                VStack(spacing: 20) {
+                    VStack(spacing: 8) {
+                        Text("Tap the flag off")
+                            .font(.body.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                        
+                        Text(getPrettyCountryTitle(countries[correctAnswerIndex]))
+                            .font(.title)
+                    }
+                    
+                    ForEach(0..<3) { number in
+                        Button {
+                            flagTapped(number)
+                        } label: {
+                            Image(countries[number])
+                                .renderingMode(.original)
+                            
+                            
+                        }
+                        .cornerRadius(16)
+                        .shadow(radius: 8)
+                        
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 20)
+                .background(.thinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                
+                Spacer()
+                Spacer()
+                
+                Text("Score: ???")
+                    .foregroundColor(.white)
+                    .font(.title.bold())
+                
+                Spacer()
+            }
+            .padding()
+        }
+        .alert(scoreTitle, isPresented: $showingScore) {
+            Button("Continue", action: askQuestion)
+        } message: {
+            Text("Your score is ???")
+        }
+    }
+    
+    func flagTapped(_ number: Int) {
+        if number == correctAnswerIndex {
+            scoreTitle = "Correct"
+        } else {
+            scoreTitle = "Wrong"
+        }
+        
+        showingScore = true
+    }
+    
+    func askQuestion() {
+        countries.shuffle()
+        correctAnswerIndex = Int.random(in: 0...2)
+    }
+    
+    private func getPrettyCountryTitle(_ originCountryTitle: String) -> String {
+        if (originCountryTitle == "us" || originCountryTitle == "uk") {
+            return originCountryTitle.uppercased()
+        } else {
+            return originCountryTitle.capitalized
+        }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
