@@ -11,9 +11,13 @@ struct ContentView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    @State private var showingScore = false
+    @State private var inProgressShowingScore = false
     
-    @State private var scoreTitle = ""
+    @State private var inProgressScoreTitle = ""
+    
+    @State private var gameOverShowingAlert = false
+    
+    @State private var gameOverAlertTitle = ""
     
     @State private var countries: [String] = [
         "estonia",
@@ -30,14 +34,13 @@ struct ContentView: View {
         "uk"
     ].shuffled()
     
-    private var score: Int = 0
+    @State private var score: Int = 0
     @State private var correctAnswerIndex: Int = Int.random(in: 0...2)
-    private var questionsCount: Int = 0
+    private let gameQuestionsCount = 8
+    @State private var questionsCount: Int = 1
     
     var body: some View {
         ZStack {
-            
-            //            let colors = colorScheme == .dark ? [Color.blue, Color.black] : [Color.blue.opacity(0.7), Color.secondary.opacity(0.2)]
             
             let colors = [Color(red: 0.1, green: 0.2, blue: 0.45), Color(red: 0.76, green: 0.15, blue: 0.26)]
             
@@ -81,9 +84,14 @@ struct ContentView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 
                 Spacer()
+                
+                Text("Question: \(questionsCount) of \(gameQuestionsCount)")
+                    .foregroundColor(.white)
+                    .font(.body.bold())
+                
                 Spacer()
                 
-                Text("Score: ???")
+                Text("Score: \(score)")
                     .foregroundColor(.white)
                     .font(.title.bold())
                 
@@ -91,26 +99,60 @@ struct ContentView: View {
             }
             .padding()
         }
-        .alert(scoreTitle, isPresented: $showingScore) {
+        .alert(inProgressScoreTitle, isPresented: $inProgressShowingScore) {
             Button("Continue", action: askQuestion)
         } message: {
-            Text("Your score is ???")
+            Text("Your score is \(score)")
+        }
+        .alert(gameOverAlertTitle, isPresented: $gameOverShowingAlert) {
+            Button("Restart game", action: restartGame)
+        } message: {
+            Text("Your final score is \(score) of \(gameQuestionsCount)")
         }
     }
     
     func flagTapped(_ number: Int) {
-        if number == correctAnswerIndex {
-            scoreTitle = "Correct"
+        if (questionsCount == gameQuestionsCount) {
+            if number == correctAnswerIndex {
+                gameOverAlertTitle = "Correct, game is over!"
+                score += 1
+            } else {
+                let tappedFlagName = getPrettyCountryTitle(countries[number])
+                gameOverAlertTitle = "Wrong, that’s the flag of \(tappedFlagName), game is over!"
+                if (score > 0) {
+                    score -= 1
+                }
+            }
+            
+            gameOverShowingAlert = true
+            
         } else {
-            scoreTitle = "Wrong"
+            if number == correctAnswerIndex {
+                inProgressScoreTitle = "Correct"
+                score += 1
+            } else {
+                let tappedFlagName = getPrettyCountryTitle(countries[number])
+                inProgressScoreTitle = "Wrong, that’s the flag of \(tappedFlagName)"
+                if (score > 0) {
+                    score -= 1
+                }
+            }
+            
+            inProgressShowingScore = true
         }
         
-        showingScore = true
     }
     
     func askQuestion() {
         countries.shuffle()
         correctAnswerIndex = Int.random(in: 0...2)
+        questionsCount += 1
+    }
+    
+    func restartGame() {
+        score = 0
+        questionsCount = 0
+        askQuestion()
     }
     
     private func getPrettyCountryTitle(_ originCountryTitle: String) -> String {
