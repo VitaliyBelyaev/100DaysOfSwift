@@ -173,6 +173,29 @@ struct Flag: View {
     }
 }
 
+struct ProminientTitle: ViewModifier {
+    
+    var text: String
+    
+    func body(content: Content) -> some View {
+        
+        VStack {
+            Text(text)
+                .font(.largeTitle)
+                .foregroundColor(.blue)
+                .padding()
+            
+            content
+        }
+    }
+}
+
+extension View {
+    func withProminientTitle(_ text: String) -> some View {
+        modifier(ProminientTitle(text: text))
+    }
+}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
