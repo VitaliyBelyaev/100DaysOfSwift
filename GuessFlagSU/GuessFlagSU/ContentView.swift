@@ -65,17 +65,9 @@ struct ContentView: View {
                     }
                     
                     ForEach(0..<3) { number in
-                        Button {
+                        Flag(name: countries[number]) {
                             flagTapped(number)
-                        } label: {
-                            Image(countries[number])
-                                .renderingMode(.original)
-                            
-                            
                         }
-                        .cornerRadius(16)
-                        .shadow(radius: 8)
-                        
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -161,6 +153,23 @@ struct ContentView: View {
         } else {
             return originCountryTitle.capitalized
         }
+    }
+}
+
+struct Flag: View {
+    
+    let name: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Image(name)
+                .renderingMode(.original)
+        }
+        .cornerRadius(16)
+        .shadow(radius: 8)
     }
 }
 
